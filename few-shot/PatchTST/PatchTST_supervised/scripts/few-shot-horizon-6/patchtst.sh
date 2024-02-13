@@ -1,0 +1,9 @@
+export CUDA_VISIBLE_DEVICES=1
+sh scripts/few-shot-horizon-6/weather-patchtst.sh
+sh scripts/few-shot-horizon-6/etth1-patchtst.sh
+sh scripts/few-shot-horizon-6/etth2-patchtst.sh
+sh scripts/few-shot-horizon-6/ettm1-patchtst.sh
+sh scripts/few-shot-horizon-6/ettm2-patchtst.sh
+sh scripts/few-shot-horizon-6/electricity-patchtst.sh
+sh scripts/few-shot-horizon-6/illness-patchtst.sh
+sh scripts/few-shot-horizon-6/traffic-patchtst.sh
