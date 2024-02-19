@@ -1,0 +1,5 @@
+name: fpfn
+channels:
+  - conda-forge
+  - defaults
+prefix: /home/user/conda/envs/fpfn
