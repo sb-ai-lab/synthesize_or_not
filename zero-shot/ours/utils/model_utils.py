@@ -348,21 +348,14 @@ class ICTransformer(nn.Module):
 
         # last linear layer + init bias
         self.fc = nn.Linear(self.hidden_size, 720)
-        # bias = torch.Tensor((4.299640889483169e-06, 0.0001597132243785138, 0.030531974279254418))
-        # self.fc.bias.data = bias
-        # shape = self.fc.weight.data.shape
-        # self.fc.weight.data = torch.zeros(shape[0], shape[1], requires_grad=True)
 
         # bns
         self.out_bn = nn.BatchNorm1d(num_features=self.hidden_size)
-        #self.inp_bn = MaskedBatchNorm1d(num_features=self.input_size) # masked bn
         self.inp_bn = nn.BatchNorm1d(num_features=1) # masked bn
 
         # embeddings + pe
         self.cls = nn.Embedding(num_embeddings=2, embedding_dim=self.hidden_size)
         self.embedder = PLREmbedding(num_dims=self.input_size, embedding_size=self.hidden_size, emb_size_periodic=500)
-        # self.coord_embedder = nn.Embedding.from_pretrained(torch.Tensor(coords_np), freeze=True)
-        # self.sensor_embedder = nn.Embedding(num_embeddings=5200, embedding_dim=16)
 
         pe = torch.zeros(500+1, self.hidden_size)
         position = torch.arange(0, 500+1, dtype=torch.float).unsqueeze(1)
@@ -371,14 +364,6 @@ class ICTransformer(nn.Module):
         pe[:, 1::2] = torch.cos(position * div_term)
         pe = pe.unsqueeze(0) #.transpose(0, 1)
         self.pe = nn.Parameter(pe)
-        
-        # pe = PositionalEncoding(d_model=self.hidden_size, max_len=500+1).get_pe()
-        # self.pe = nn.Parameter(pe)
-        
-        # self.pe = nn.Parameter(data=torch.randn(500+1, self.hidden_size))
-        # self.layernorm = nn.LayerNorm(self.hidden_size)
-        # self.dropout = nn.Dropout(p = 0.2)
-        # nn.init.constant_(self.pe.weight, pe)
 
         # poolings
         self.max = SequenceMaxPooler()
@@ -391,97 +376,35 @@ class ICTransformer(nn.Module):
         
     def forward(self, x, mask):
 
-        # create embeddings from sensor_id
-        # embeds = self.coord_embedder(x[:, :, 0].long()) 
-        # embeds2 = self.sensor_embedder(x[:, :, 0].long()) 
-        #x = self.embedder(x)
-        #print('x', x.shape)
-        #print('mask', mask.sum(dim=-1))
-
         x = torch.unsqueeze(x, dim=-1)
-        #x = torch.permute(x, (0, 2, 1))
-        #x = self.inp_bn(x)
-        #x = torch.permute(x, (0, 2, 1))
         proj = self.proj(x)
         # prepare padding mask
         x_len = mask.sum(dim=-1)
-        # mask = ~x[:, :, -1].bool()
         mask = ~mask.bool()
 
         # add one more element in the mask for classification token
         mask = torch.cat((torch.zeros((x.shape[0], 1)).bool().to(x.device), mask), dim = 1)
 
-        # concat embeds with features
-        #x = torch.cat([x[:, :, 1:], embeds], dim=-1) # ????
-
-        # (bs, sec, feat) -> (bs, feat, sec) -> batch norm ->(bs, sec, feat)
-        # print(x.shape)
-        #print('x', x.shape)
-        #x = torch.permute(x, (0, 2, 1))
-        #x = self.inp_bn(x, x_len)
-        
-        # project input features to the hidden dim
-        # x = self.proj(x)
-        #print('x', x.shape)
-        #x = torch.permute(x, (0, 2, 1))
-        #print('new', proj.shape)
         # add classification token
         x_cls = self.cls(torch.zeros((x.shape[0], 1)).long().to(x.device))
         x = torch.cat((x_cls, proj), dim = 1)
-        #print('after cls', x.shape)
+
         # possible positional encoding
-        # x = self.pe(x)
         x = x + self.pe
-        # x = self.layernorm(x)
-        # x = self.dropout(x)
-        #print('after pe', x.shape)
+
         # transformer model
         x = self.tr(x, 
                     src_key_padding_mask=mask
                     ) # 
-        #print('after tr', x.shape)
         # create mask for calculating poolings
         mask = (torch.arange(x.shape[1])[None, :].to(x.device) < x_len[:, None]+1)[:, :, None]
 
         # max and mean poolings
-        # feature_max = self.max(x, mask)
-        # feature_avg = self.mean(x, mask)
-
-        # concat cls pooling, emb for the first element, + 2 poolings
-        # out = torch.cat((x[:, 0, :], feature_max, feature_avg), dim = 1)
-        # x[:,1,:] - выше заменить на последний ненулевой по маске (можно из длинны + 1 взять)
-        # MLP
-        #out = self.out_bn(x[:, 0, :])
         out = x[:, 0, :]
         out = self.act(out)
         out = self.fc(out)
-        #1/0
-        #out = self.cls2(torch.ones((x.shape[0], 1)).long().to(x.device)).squeeze(1)
+
         return out
-    
-# def train_one_epoch(model, loss_fn, optimizer, scheduler, train_loader, device):
-#     lr_list = []
-#     loss_list = []
-
-#     for i, data in enumerate(train_loader):
-#         series = data['series'].to(device)
-#         mask_series = data['mask_series'].to(device)
-#         target = data['target'].to(device)
-#         mask_target = data['mask_target'].to(device)
-#         optimizer.zero_grad()
-#         outputs = model(series, mask_series)
-#         targets = target * mask_target
-#         outputs = outputs * mask_target
-#         loss = loss_fn(outputs, targets, mask_target) # / torch.sum(data['mask_target'].to(device)) * data['target'].to(device).shape[1] * data['target'].to(device).shape[0]
-#         lr_list.append(scheduler.get_lr())
-
-#         loss.backward()
-#         optimizer.step()
-#         scheduler.step()
-#         loss_list.append(loss.item())
-#         print(loss)
-
-#     return loss_list, lr_list
     
 
     
