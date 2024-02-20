@@ -13,7 +13,7 @@ Witnessing the benefits from the enrichment of NLP datasets with artificially-ge
 - Follow the instructions provided in the respective task and model folder.
 
 
-## Citation
+<!-- ## Citation
 
 If you find this repo useful, please cite our paper. 
 
@@ -23,5 +23,5 @@ If you find this repo useful, please cite our paper.
   author={Tian Zhou, Peisong Niu, Xue Wang, Liang Sun, Rong Jin},
   booktitle={NeurIPS},
   year={2023}
-}
+} -->
 ```
