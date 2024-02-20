@@ -73,6 +73,5 @@ for n_h, horizon in enumerate([96, 192, 336, 720]):
                 metrics_bench.loc['mse', name] = mse_i
                 metrics_bench.loc['mae', name] = mae_i
 
-
         print(metrics_bench.round(3))
-        metrics_bench.to_csv('results_fewshot_exp7new_base_exp.csv')
+        metrics_bench.to_csv(f'results_fewshot_{config['horizon']}_{config['real_size']}.csv')
