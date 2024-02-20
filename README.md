@@ -6,7 +6,7 @@ The industry is rich in cases when we are required to make forecasting for large
 
 Witnessing the benefits from the enrichment of NLP datasets with artificially-generated data, we might want to adopt their experience for time series. In contrast to natural language, the process of generation of synthetic time series data is even more favorable because it provides full control of series patterns, time horizons, and number of samples. In this work, we consider the essential question if it is advantageous to train a foundation model on synthetic data or it is better to utilize only a limited number of real-life examples. Our experiments are conducted only for regular time series and speak in favor of leveraging solely the real time series. The choice of the proper authentic dataset strongly influences the performance during inference. However, in case of access even to a small amount of short time series, the switching from zero-short setting to the regime of supervised training will mostly enhance performance.
 
-<div align="center"><img src=./pic/share_of_wins_mae.pdf width=80% /></div>
+<div align="center"><img src=./pic/share_of_wins_mae.png width=80% /></div>
 
 ## Get Start
 
