@@ -1,5 +1,7 @@
 # Towards foundation time series model: to synthesize or not to synthesize?
 
+REPO IN PROGRESS
+
 Kseniia Kuvshinova, Olga Tsymboi, Alina Kostromina, Dmitry Simakov, Elizaveta Kovtun, "Towards foundation time series model: to synthesize or not to synthesize?".
 
 The industry is rich in cases when we are required to make forecasting for large amounts of time series at once. However, we might be in a situation where we can not afford to train a separate model for each of them. Such issue in time series modeling remains without due attention. The remedy for this setting is the establishment of a foundation model. Such a model is expected to work in zero-shot and few-shot regimes. However, what should we take as a training dataset for such kind of model?
