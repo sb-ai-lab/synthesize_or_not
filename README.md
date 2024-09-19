@@ -1,29 +1,40 @@
-# Towards foundation time series model: to synthesize or not to synthesize?
+Here's a revised version of your README:
 
-REPO IN PROGRESS
+---
 
-Kseniia Kuvshinova, Olga Tsymboi, Alina Kostromina, Dmitry Simakov, Elizaveta Kovtun, "Towards foundation time series model: to synthesize or not to synthesize?".
+# Towards Foundation Time Series Models: To Synthesize or Not to Synthesize?
 
-The industry is rich in cases when we are required to make forecasting for large amounts of time series at once. However, we might be in a situation where we can not afford to train a separate model for each of them. Such issue in time series modeling remains without due attention. The remedy for this setting is the establishment of a foundation model. Such a model is expected to work in zero-shot and few-shot regimes. However, what should we take as a training dataset for such kind of model?
+**REPO IN PROGRESS**
 
-Witnessing the benefits from the enrichment of NLP datasets with artificially-generated data, we might want to adopt their experience for time series. In contrast to natural language, the process of generation of synthetic time series data is even more favorable because it provides full control of series patterns, time horizons, and number of samples. In this work, we consider the essential question if it is advantageous to train a foundation model on synthetic data or it is better to utilize only a limited number of real-life examples. Our experiments are conducted only for regular time series and speak in favor of leveraging solely the real time series. The choice of the proper authentic dataset strongly influences the performance during inference. However, in case of access even to a small amount of short time series, the switching from zero-short setting to the regime of supervised training will mostly enhance performance.
+**Authors**: Kseniia Kuvshinova, Olga Tsymboi, Alina Kostromina, Dmitry Simakov, Elizaveta Kovtun
 
-<div align="center"><img src=./pic/share_of_wins_mae.png width=80% /></div>
+This repository accompanies the paper, *"Towards Foundation Time Series Models: To Synthesize or Not to Synthesize?"*. 
 
-## Get Start
+In industries where forecasting large volumes of time series is common, training a separate model for each series is often impractical. Instead, a foundation model that operates effectively in zero-shot or few-shot scenarios is a promising solution. However, a critical question arises: what should be used as the training dataset for such a model?
 
-- Follow the instructions provided in the respective task and model folder.
+Drawing inspiration from advancements in NLP, where synthetic data has enhanced dataset quality, this work explores whether training foundation time series models on synthetic data is advantageous compared to using only real-life examples. Unlike natural language, generating synthetic time series data offers greater control over series patterns, time horizons, and sample sizes.
 
+Our experiments, focused on regular time series data, suggest that using only real-life data yields better performance. The choice of authentic dataset significantly impacts inference results. Nevertheless, even with limited short time series data, transitioning from a zero-shot setting to supervised training can substantially improve model performance.
 
-<!-- ## Citation
+<div align="center"><img src="./pic/share_of_wins_mae.png" width="80%" /></div>
 
-If you find this repo useful, please cite our paper. 
+## Getting Started
+
+1. Follow the instructions in the respective task and model folders.
+
+## Citation
+
+If you find this repository useful, please cite our paper.
 
 ```
-@inproceedings{zhou2023onefitsall,
-  title={{One Fits All}: Power General Time Series Analysis by Pretrained LM},
-  author={Tian Zhou, Peisong Niu, Xue Wang, Liang Sun, Rong Jin},
-  booktitle={NeurIPS},
-  year={2023}
-} -->
-<!-- ``` -->
+@article{kuvshinova2024towards,
+  title={Towards Foundation Time Series Model: To Synthesize Or Not To Synthesize?},
+  author={Kuvshinova, Kseniia and Tsymboi, Olga and Kostromina, Alina and Simakov, Dmitry and Kovtun, Elizaveta},
+  journal={arXiv preprint arXiv:2403.02534},
+  year={2024}
+}
+```
+
+---
+
+Let me know if you need any more adjustments!
