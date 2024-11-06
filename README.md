@@ -1,7 +1,3 @@
-Here's a revised version of your README:
-
----
-
 # Towards Foundation Time Series Models: To Synthesize or Not to Synthesize?
 
 **REPO IN PROGRESS**
@@ -34,7 +30,3 @@ If you find this repository useful, please cite our paper.
   year={2024}
 }
 ```
-
----
-
-Let me know if you need any more adjustments!
